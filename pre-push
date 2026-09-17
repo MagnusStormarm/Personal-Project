@@ -1,0 +1,20 @@
+#!/usr/bin/env bash
+# Pre-push hook: runs a final check via _check_pushed_state.py before
+# allowing a push, catching anything the pre-commit hook might have
+# missed (e.g. a commit made with --no-verify). Installed into
+# .git/hooks/pre-push by 'python3 scripts/session.py setup', which
+# substitutes __ELDARA_PROJECT_ROOT__ below the same way it does for
+# pre-commit -- see that hook's comment for why "git rev-parse
+# --show-toplevel" can't be used here instead.
+set -euo pipefail
+
+cd "__ELDARA_PROJECT_ROOT__"
+
+if [ -f saves/current.json ]; then
+    if ! python3 scripts/git-hooks/_check_pushed_state.py; then
+        echo "pre-push: BLOCKED -- saves/current.json is not in a valid, committed state." >&2
+        exit 1
+    fi
+fi
+
+exit 0

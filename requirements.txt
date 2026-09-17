@@ -1,0 +1,17 @@
+# Core dependencies for Eldara's tooling scripts.
+# jsonschema is optional -- validate_state.py falls back to its own
+# built-in manual checks if it isn't installed, but stricter schema
+# validation is available when it is.
+jsonschema>=4.0
+
+# nltk is optional and deliberately NOT listed as a dependency here.
+# self_critique.py uses WordNet, when present, for an advisory notice
+# about possessed nouns that read as carried items but match no gear
+# entry ("his falchion", which the hard check's 35-word list has never
+# heard of). Without it that one advisory is off and every other check
+# behaves identically. Two commands, and the second is the one people
+# forget -- the package alone does nothing:
+#     pip install nltk
+#     python -m nltk.downloader wordnet
+# See scripts/semantic_gear_check.py for what it catches, what it gets
+# wrong, and why it advises rather than blocks.

@@ -1,0 +1,13 @@
+[
+  {
+    "name": "Chad's phone/wallet/keys",
+    "established_fact": "explicitly non-recoverable and 'shouldn't become a plot thread' per docs/CHAD_BACKSTORY.md, 'What he doesn't have anymore' -- narration having Chad use, check, or recover any of the three contradicts this directly, not just tonally.",
+    "contradiction_patterns": [
+      "\\bchecks? his phone\\b",
+      "\\bhis phone (?:buzzes|rings|lights up|vibrates)\\b",
+      "\\bfinds? his (?:old\\s+)?wallet\\b",
+      "\\brecovers? his wallet\\b",
+      "\\buses? his (?:old\\s+)?keys\\b"
+    ]
+  }
+]

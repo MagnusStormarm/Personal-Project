@@ -1,0 +1,1154 @@
+{
+  "age": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "aging": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "aldric": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "appearance": {
+    "sections": [
+      "Physical description"
+    ],
+    "source": "chad"
+  },
+  "army": {
+    "sections": [
+      "2.5"
+    ],
+    "source": "world"
+  },
+  "artifact": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "ashby": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "ashen kettle": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "authority": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "back": {
+    "sections": [
+      "Physical description"
+    ],
+    "source": "chad"
+  },
+  "backstory": {
+    "sections": [
+      "Notes for the GM"
+    ],
+    "source": "chad"
+  },
+  "border marches": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "calendar": {
+    "sections": [
+      "2.4"
+    ],
+    "source": "world"
+  },
+  "caravan": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "chad": {
+    "sections": [
+      "Notes for the GM"
+    ],
+    "source": "chad"
+  },
+  "chad's nature": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "clergy": {
+    "sections": [
+      "2.15"
+    ],
+    "source": "world"
+  },
+  "coin": {
+    "sections": [
+      "2.4",
+      "2.13"
+    ],
+    "source": "world"
+  },
+  "columbus": {
+    "sections": [
+      "Physical description"
+    ],
+    "source": "chad"
+  },
+  "combat style": {
+    "sections": [
+      "2.5"
+    ],
+    "source": "world"
+  },
+  "cooking": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "copper": {
+    "sections": [
+      "2.4",
+      "2.13"
+    ],
+    "source": "world"
+  },
+  "cost": {
+    "sections": [
+      "2.13"
+    ],
+    "source": "world"
+  },
+  "counterexample": {
+    "sections": [
+      "The eviction years"
+    ],
+    "source": "chad"
+  },
+  "creature": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "culture": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "currency": {
+    "sections": [
+      "2.4",
+      "2.13"
+    ],
+    "source": "world"
+  },
+  "custom": {
+    "sections": [
+      "2.11"
+    ],
+    "source": "world"
+  },
+  "danger": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "debt": {
+    "sections": [
+      "Why this matters going forward"
+    ],
+    "source": "chad"
+  },
+  "debt enforcement": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "dell": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "disappearances": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "displaced": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "door": {
+    "sections": [
+      "Sensory Anchors"
+    ],
+    "source": "chad"
+  },
+  "duke harlan": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "dwarf": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "economy": {
+    "sections": [
+      "2.4"
+    ],
+    "source": "world"
+  },
+  "elandriel": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "elderwoods": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "elf": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "english": {
+    "sections": [
+      "2.12"
+    ],
+    "source": "world"
+  },
+  "etiquette": {
+    "sections": [
+      "2.11"
+    ],
+    "source": "world"
+  },
+  "eviction": {
+    "sections": [
+      "The eviction years"
+    ],
+    "source": "chad"
+  },
+  "fairness": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "faith": {
+    "sections": [
+      "2.15"
+    ],
+    "source": "world"
+  },
+  "family": {
+    "sections": [
+      "Relationships"
+    ],
+    "source": "chad"
+  },
+  "famine": {
+    "sections": [
+      "2.2"
+    ],
+    "source": "world"
+  },
+  "festival": {
+    "sections": [
+      "2.9"
+    ],
+    "source": "world"
+  },
+  "first item": {
+    "sections": [
+      "2.14a"
+    ],
+    "source": "world"
+  },
+  "foreman": {
+    "sections": [
+      "2.14"
+    ],
+    "source": "world"
+  },
+  "forest spirit": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "geography": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "gloves": {
+    "sections": [
+      "2.14a"
+    ],
+    "source": "world"
+  },
+  "goals": {
+    "sections": [
+      "What He Wants Now"
+    ],
+    "source": "chad"
+  },
+  "goblin": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "gold": {
+    "sections": [
+      "2.4",
+      "2.13"
+    ],
+    "source": "world"
+  },
+  "goldhammer": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "governance": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "grain": {
+    "sections": [
+      "2.4"
+    ],
+    "source": "world"
+  },
+  "greenbottle": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "greenmantle": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "grey market": {
+    "sections": [
+      "2.4"
+    ],
+    "source": "world"
+  },
+  "guild": {
+    "sections": [
+      "2.14"
+    ],
+    "source": "world"
+  },
+  "habit": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "half-elf": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "half-elves": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "halfling": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "harvest moot": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "hazard": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "healer": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "heartlands": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "highcrown": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "hiring": {
+    "sections": [
+      "2.14"
+    ],
+    "source": "world"
+  },
+  "history": {
+    "sections": [
+      "2.2"
+    ],
+    "source": "world"
+  },
+  "holiday": {
+    "sections": [
+      "2.9"
+    ],
+    "source": "world"
+  },
+  "hollow creek": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "human": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "humor": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "hurst": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "inn": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "innkeeper": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "ironvein": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "ironwood": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "job": {
+    "sections": [
+      "2.14"
+    ],
+    "source": "world"
+  },
+  "job history": {
+    "sections": [
+      "Work history *(the eviction years are the emotional center; this is the fuller shape around them)*"
+    ],
+    "source": "chad"
+  },
+  "keys": {
+    "sections": [
+      "What he doesn't have anymore"
+    ],
+    "source": "chad"
+  },
+  "king aldric": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "labor": {
+    "sections": [
+      "2.14"
+    ],
+    "source": "world"
+  },
+  "landlord": {
+    "sections": [
+      "The eviction years"
+    ],
+    "source": "chad"
+  },
+  "language": {
+    "sections": [
+      "2.12"
+    ],
+    "source": "world"
+  },
+  "leafwhisper": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "magic": {
+    "sections": [
+      "2.7"
+    ],
+    "source": "world"
+  },
+  "marchand": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "market": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "market day": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "military": {
+    "sections": [
+      "2.5"
+    ],
+    "source": "world"
+  },
+  "millbrook": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "mine labor": {
+    "sections": [
+      "2.14"
+    ],
+    "source": "world"
+  },
+  "mining dispute": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "mining rights": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "monster": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "moonshadow": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "moot": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "mother": {
+    "sections": [
+      "Early life"
+    ],
+    "source": "chad"
+  },
+  "northern march": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "npc": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "old": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "old world": {
+    "sections": [
+      "The eviction years",
+      "What he doesn't have anymore"
+    ],
+    "source": "chad"
+  },
+  "orc": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "osgood": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "outlander": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "owner": {
+    "sections": [
+      "The eviction years"
+    ],
+    "source": "chad"
+  },
+  "people": {
+    "sections": [
+      "2.6"
+    ],
+    "source": "world"
+  },
+  "personality": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "phone": {
+    "sections": [
+      "What he doesn't have anymore"
+    ],
+    "source": "chad"
+  },
+  "physical": {
+    "sections": [
+      "Physical description"
+    ],
+    "source": "chad"
+  },
+  "port vessar": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "portering": {
+    "sections": [
+      "2.14"
+    ],
+    "source": "world"
+  },
+  "price": {
+    "sections": [
+      "2.13"
+    ],
+    "source": "world"
+  },
+  "pricing": {
+    "sections": [
+      "2.13"
+    ],
+    "source": "world"
+  },
+  "private theory": {
+    "sections": [
+      "Why this matters going forward"
+    ],
+    "source": "chad"
+  },
+  "profession": {
+    "sections": [
+      "2.14"
+    ],
+    "source": "world"
+  },
+  "property manager": {
+    "sections": [
+      "The eviction years"
+    ],
+    "source": "chad"
+  },
+  "raid": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "realm": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "red harvest famine": {
+    "sections": [
+      "2.2"
+    ],
+    "source": "world"
+  },
+  "refugee": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "region": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "relationships": {
+    "sections": [
+      "Relationships"
+    ],
+    "source": "chad"
+  },
+  "religion": {
+    "sections": [
+      "2.15"
+    ],
+    "source": "world"
+  },
+  "restricted artifacts": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "risk": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "riverfoot": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "riverwatch": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "road": {
+    "sections": [
+      "2.8"
+    ],
+    "source": "world"
+  },
+  "rock drake": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "rootblight": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "route": {
+    "sections": [
+      "2.8"
+    ],
+    "source": "world"
+  },
+  "ruin scavenging": {
+    "sections": [
+      "2.14a"
+    ],
+    "source": "world"
+  },
+  "seasons": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "self-image": {
+    "sections": [
+      "Why this matters going forward"
+    ],
+    "source": "chad"
+  },
+  "sense of humor": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "sensory": {
+    "sections": [
+      "Sensory Anchors"
+    ],
+    "source": "chad"
+  },
+  "settlement": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "shrine": {
+    "sections": [
+      "2.15"
+    ],
+    "source": "world"
+  },
+  "silver": {
+    "sections": [
+      "2.4",
+      "2.13"
+    ],
+    "source": "world"
+  },
+  "silverhaven": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "silverwood accords": {
+    "sections": [
+      "2.2"
+    ],
+    "source": "world"
+  },
+  "single mother": {
+    "sections": [
+      "The eviction years"
+    ],
+    "source": "chad"
+  },
+  "skill": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "smith": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "smuggling": {
+    "sections": [
+      "2.4"
+    ],
+    "source": "world"
+  },
+  "spices": {
+    "sections": [
+      "2.4"
+    ],
+    "source": "world"
+  },
+  "spirit": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "stonefist": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "stoneward wisp": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "stranger": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "sundering": {
+    "sections": [
+      "2.2"
+    ],
+    "source": "world"
+  },
+  "sylvandar": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "talstan": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "temperament": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "thrain": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "thrum-gate": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "tic": {
+    "sections": [
+      "Temperament"
+    ],
+    "source": "chad"
+  },
+  "tilda": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "travel": {
+    "sections": [
+      "2.8"
+    ],
+    "source": "world"
+  },
+  "troll": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "underhill": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "vaelith": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "valenor": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "vane": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "vermin": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "veyl": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "wage": {
+    "sections": [
+      "2.13"
+    ],
+    "source": "world"
+  },
+  "wallet": {
+    "sections": [
+      "What he doesn't have anymore"
+    ],
+    "source": "chad"
+  },
+  "walt": {
+    "sections": [
+      "The eviction years"
+    ],
+    "source": "chad"
+  },
+  "war of the two crowns": {
+    "sections": [
+      "2.2"
+    ],
+    "source": "world"
+  },
+  "watch": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "waystation": {
+    "sections": [
+      "2.15"
+    ],
+    "source": "world"
+  },
+  "weather": {
+    "sections": [
+      "2.1"
+    ],
+    "source": "world"
+  },
+  "what he wants": {
+    "sections": [
+      "What He Wants Now"
+    ],
+    "source": "chad"
+  },
+  "who is chad": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "why chad volunteered": {
+    "sections": [
+      "The eviction years"
+    ],
+    "source": "chad"
+  },
+  "wick": {
+    "sections": [
+      "2.3"
+    ],
+    "source": "world"
+  },
+  "will-o-wisp": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "wine": {
+    "sections": [
+      "2.4"
+    ],
+    "source": "world"
+  },
+  "wisp": {
+    "sections": [
+      "2.10"
+    ],
+    "source": "world"
+  },
+  "wool": {
+    "sections": [
+      "2.4"
+    ],
+    "source": "world"
+  },
+  "work": {
+    "sections": [
+      "2.14"
+    ],
+    "source": "world"
+  },
+  "work history": {
+    "sections": [
+      "Work history *(the eviction years are the emotional center; this is the fuller shape around them)*"
+    ],
+    "source": "chad"
+  }
+}

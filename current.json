@@ -1,0 +1,44 @@
+{
+  "schema_version": 1,
+  "turn": 0,
+  "in_world_date": {
+    "day": 1,
+    "month": "Seedmonth",
+    "year": 1
+  },
+  "status": [],
+  "magic": [],
+  "gear": [
+    {
+      "name": "T-shirt",
+      "acquired_turn": 0,
+      "acquired_event": "Baseline starting clothes"
+    },
+    {
+      "name": "Jeans",
+      "acquired_turn": 0,
+      "acquired_event": "Baseline starting clothes"
+    },
+    {
+      "name": "Underwear",
+      "acquired_turn": 0,
+      "acquired_event": "Baseline starting clothes"
+    },
+    {
+      "name": "Socks",
+      "acquired_turn": 0,
+      "acquired_event": "Baseline starting clothes"
+    },
+    {
+      "name": "Shoes",
+      "acquired_turn": 0,
+      "acquired_event": "Baseline starting clothes"
+    }
+  ],
+  "currency": {
+    "copper": 0,
+    "silver": 0,
+    "gold": 0,
+    "platinum": 0
+  }
+}

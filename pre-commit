@@ -1,0 +1,30 @@
+#!/usr/bin/env bash
+# Pre-commit hook: refuses to let an invalid saves/current.json be
+# committed. Installed into .git/hooks/pre-commit by
+# 'python3 scripts/session.py setup', which substitutes
+# __ELDARA_PROJECT_ROOT__ below for this machine's actual project
+# directory. This file no longer knows its own original location once
+# it's copied into .git/hooks/, and neither "git rev-parse
+# --show-toplevel" nor this script's own cwd can be assumed to equal the
+# project root -- true when this project itself is the repo root, false
+# when it's nested inside a larger repo (as it is here: eldara/ inside a
+# bigger checkout), which silently disabled this hook entirely until
+# this fix.
+set -euo pipefail
+
+cd "__ELDARA_PROJECT_ROOT__"
+
+# --relative: "git diff --cached --name-only" reports staged paths
+# relative to the repo's TOP LEVEL by default, not relative to cwd, even
+# after the cd above -- without this flag the grep below would need to
+# match a repo-root-relative path (e.g. "eldara/saves/current.json")
+# instead of the fixed "saves/current.json" this hook has always checked.
+if git diff --cached --name-only --relative | grep -q "^saves/current.json$"; then
+    echo "pre-commit: validating saves/current.json..."
+    if ! python3 scripts/validate_state.py saves/current.json; then
+        echo "pre-commit: BLOCKED -- saves/current.json failed validation. Fix it or use 'python3 scripts/session.py commit' properly." >&2
+        exit 1
+    fi
+fi
+
+exit 0

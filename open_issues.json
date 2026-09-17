@@ -1,0 +1,243 @@
+{
+  "_comment": [
+    "Tracked issue list for session_cost_guide.py --inventory / --rank.",
+    "",
+    "This file exists because the ranker originally took a hand-written JSON",
+    "per invocation, so the issue list lived nowhere between runs -- the same",
+    "amnesia that let eight retained campaign copies be forgotten inside the",
+    "session that produced them.",
+    "",
+    "'effectiveness' and 'churn' are JUDGED, 1-5 and 0-5. Only score a",
+    "candidate whose issue has actually been investigated; an invented number",
+    "here reads as a measurement later. Leave effectiveness null to mean 'not",
+    "yet researched' -- the ranker reports those separately instead of",
+    "ranking them.",
+    "",
+    "'owner': 'agent' = fixable here. 'user-decision' = a design call that was",
+    "explicitly put to the user; the ranker refuses to score these, because",
+    "scoring one would be quietly deciding it."
+  ],
+  "issues": [
+    {
+      "id": "deadline-unit-error",
+      "status": "fixed",
+      "owner": "agent",
+      "summary": "deadline_turn counted turns while the fiction dates obligations in days; the two diverge 0.00-1.09 days/turn.",
+      "evidence": "Chain C re-pegged deadline_turn 15->18 by hand and journalled that it was correcting proxy drift. validate_state.py never read in_world_date.",
+      "fixed_by": "072d404 -- deadline_date + date-based lapse + divergence warning",
+      "candidates": []
+    },
+    {
+      "id": "resolved-thread-retention",
+      "status": "fixed",
+      "owner": "agent",
+      "summary": "state_schema.json says a resolved thread is removed from open_threads entirely, never just marked inactive. Two of three chains marked inactive instead; validate_state.py exit 0 on every turn.",
+      "evidence": "chainA kept 2 resolved-but-retained threads, chainB 1, chainC 0. chainB's retained text reads 'CLOSED BY PAYMENT, not by forgiveness' -- a defence written into the ledger that resisted the turn-17 forgiveness pressure. The rule-breaking version may be the better behaviour.",
+      "candidates": [
+        {
+          "name": "validator warns on a resolved-looking retained thread",
+          "tier": 1,
+          "effectiveness": 4,
+          "churn": 0,
+          "why": "Detector calibrated against all 26 distinct real thread texts from this session: 4/4 true positives, 0 false positives, and it leaves alone the two active=false threads that are dormant-but-open (a standing offer, an unpriced debt) -- confirming active:false has a legitimate non-resolved meaning the schema already describes."
+        },
+        {
+          "name": "point GM_INSTRUCTIONS at continuity_notes for the annotation",
+          "tier": 0,
+          "effectiveness": 3,
+          "churn": 0,
+          "why": "The good behaviour needs a home. All three chains already used continuity_notes for the refusal; saying so makes the correct pattern explicit instead of leaving the GM to reinvent it as a retained thread."
+        },
+        {
+          "name": "make it a hard validation error",
+          "tier": 1,
+          "effectiveness": 3,
+          "churn": 3,
+          "why": "Detection is textual. This project's own distinction is that blocking gates must be deterministic and advisory passes may be heuristic -- a regex that rejects a save outright would break that, and would reject a legitimate thread whose prose merely mentions settling."
+        },
+        {
+          "name": "change the schema to permit retention",
+          "tier": 1,
+          "effectiveness": 2,
+          "churn": 2,
+          "why": "Would legitimise spending soft-cap space on closed business for an audit benefit the evidence shows is already delivered by continuity_notes."
+        }
+      ],
+      "research": "The reason this was held back as a design call does not survive the data. The argument for retention was that chainB's retained text ('CLOSED BY PAYMENT, not by forgiveness') defended against the turn-17 forgiveness pressure. But ALL THREE chains recorded that refusal in continuity_notes, which is also in current.json and so also in the GM's mental model (GM_INSTRUCTIONS line 95). chainC held the line with ZERO retained threads. Retention is not what made the defence work; continuity_notes is, and it is the purpose-built field. Retention also costs cap space: 40% of chainA's open_threads array was closed business, pushing a 5/8 array toward the soft cap where prune_advisor -- a known-risky path -- gets invoked. Soft-delete practice agrees: keep a flag when you need an audit trail or an undo, and here the audit trail already exists elsewhere, so the flag only accumulates.",
+      "fixed_by": "validate_state.py warns when a thread whose prose reads as resolved is still in open_threads (advisory -- detection is textual); GM_INSTRUCTIONS points at continuity_notes as the home for 'paid, not forgiven'. Reclassified from user-decision to agent after the evidence resolved it."
+    },
+    {
+      "id": "narration-not-persisted",
+      "status": "fixed",
+      "owner": "agent",
+      "summary": "No narration prose survives a turn. saves/journal.md holds a one-line --note plus field diffs; claude -p returns only the final message.",
+      "evidence": "playtest_audit.py Pass 3 defers its open questions to 'a human reading actual transcript prose'. That artifact does not exist, so the stated human-review fallback is impossible as built. commit_state.py ALREADY receives the full narration (--critique-file/--critique-text/--critique-stdin), writes it to a temp file for self_critique.py and lore_consistency_check.py, then deletes it in a finally block. The prose is in hand at commit time and thrown away.",
+      "candidates": [
+        {
+          "name": "persist narration per turn, committed with the state",
+          "tier": 1,
+          "effectiveness": 5,
+          "churn": 1,
+          "why": "The text is already in hand and commit_state.py already git-commits a file set, so this is a write and an add. Directly restores the artifact Pass 3 defers to. ~7KB/turn measured from chain responses -- 17 turns is ~100KB."
+        },
+        {
+          "name": "store only a hash of the narration",
+          "tier": 1,
+          "effectiveness": 2,
+          "churn": 1,
+          "why": "Proves a state was committed against SOME prose and detects later tampering, but a human still cannot read it, so Pass 3's fallback stays impossible. Disk was never the constraint."
+        },
+        {
+          "name": "append narration into journal.md",
+          "tier": 1,
+          "effectiveness": 3,
+          "churn": 2,
+          "why": "No new files, but Pass 1 greps the journal. Verified: the JSON-shaped regexes (status/magic/copper) do not match ordinary prose, but 'deadline_turn' in journal is a bare substring test and the npc_id coverage heuristic counts literal occurrences -- both inflatable by narration that discusses mechanics."
+        },
+        {
+          "name": "capture narration in run_drift_chain only",
+          "tier": 4,
+          "effectiveness": 2,
+          "churn": 0,
+          "why": "Fixes the harness, not the project: real play through session.py would still lose its prose. Also tier 4, so blocked by budget."
+        },
+        {
+          "name": "document the limitation, change nothing",
+          "tier": 0,
+          "effectiveness": 1,
+          "churn": 0,
+          "why": "The 'instructions nobody follows' failure, already corrected once this session."
+        }
+      ],
+      "research": "Survey of evidence tracing / execution provenance in LLM agents (arXiv 2606.04990): fine-grained provenance supports verification, debugging, recovery and audit -- coarse-grained 'may fail to identify which evidence supported a claim'. In Eldara the state is the claim and the narration is the evidence, so with the prose gone no claim can be supported. Practice favours typed/structured records over free-form transcripts, and hash-chaining each bundle to its predecessor (CloudTrail-style); Eldara already chains commit_token turn to turn.",
+      "fixed_by": "commit_state.py persist_narration() writes saves/narration/turn-NNNN.md, stamped with the commit_token of the state it justified, committed with the state. Pass 3 now points at it. Turns committed before this are gone."
+    },
+    {
+      "id": "unpriced-obligation",
+      "status": "fixed",
+      "owner": "agent",
+      "summary": "An open_thread can state a debt with no amount, so the GM invents the price and nothing can check it. Closed-inventory is a blocking gate; prices are wide open.",
+      "evidence": "Five stress copies, identical seeded start (14c 2s = 34 copper-equiv) and identical prompt, ended at 10 / 4 / 6 / 0 / 34 copper-equiv -- a 34-copper spread on the same scene, one GM paying the entire purse and another paying nothing. The seeded thread reads 'Maren wants payment for the room by the week's end' and no amount appears anywhere in the state; only one of five ever stated a nightly rate.",
+      "found_by": "tier-0 mining of five stress copies that had never been read",
+      "candidates": [
+        {
+          "name": "add optional amount/currency to open_threads",
+          "tier": 1,
+          "effectiveness": 4,
+          "churn": 1,
+          "why": "Lets a stated price become a checkable fact, the way acquired_event did for gear. Optional, so old saves keep working. Does not force a price where the fiction never named one."
+        },
+        {
+          "name": "seed earn_clean_slate's debt with an explicit amount",
+          "tier": 1,
+          "effectiveness": 3,
+          "churn": 1,
+          "why": "Fixes the fixture that produced the spread, so future runs test against a priced obligation. Narrower: does not stop an unpriced thread being written in real play."
+        },
+        {
+          "name": "validator warns on a debt-shaped thread with no amount",
+          "tier": 1,
+          "effectiveness": 2,
+          "churn": 0,
+          "why": "Advisory only and keyword-based, so it will misfire on threads that are not debts. Weaker than making the field exist."
+        }
+      ],
+      "fixed_by": "open_threads.amount (currency-shaped, optional) + a prose/record price-divergence warning, and the seeding fixture's debt priced at 14 copper. The third candidate (keyword 'debt-shaped' warning) was not taken: the divergence check covers the same ground without misfiring, since it only fires on threads that demonstrably name a sum."
+    },
+    {
+      "id": "validator-registry-path",
+      "status": "fixed",
+      "owner": "agent",
+      "summary": "validate_state.py <path> validates the file at that path but resolves npc_registry.json relative to the SCRIPT's location, so a save from another campaign is checked against the wrong registry.",
+      "evidence": "Validating all eight retained copies from the main repo reported every NPC as an unregistered new introduction -- eight confident, identical, wrong failures. Re-running each inside its own tree: all eight clean. Found by making exactly that mistake.",
+      "found_by": "tier-0 mining; an invocation error that turned out to be a real defect",
+      "candidates": [
+        {
+          "name": "resolve registry relative to the save file's tree",
+          "tier": 1,
+          "effectiveness": 5,
+          "churn": 1,
+          "why": "Makes the path argument mean what it appears to mean. The dangerous property now is that it fails LOUDLY and wrongly, which reads as a real finding."
+        },
+        {
+          "name": "refuse a path outside the script's own tree",
+          "tier": 1,
+          "effectiveness": 3,
+          "churn": 1,
+          "why": "Honest but narrower -- removes the false failure without enabling the cross-campaign check that made it useful to try."
+        }
+      ],
+      "fixed_by": "companion_paths(): registry/locations resolve beside the save when present, else fall back to the script's tree. Schema deliberately excluded (project code, not campaign data)."
+    },
+    {
+      "id": "continuity-notes-evicted-unarchived",
+      "status": "fixed",
+      "owner": "agent",
+      "summary": "continuity_notes is capped at 5 and the cap is a hard ERROR, so eviction is forced; nothing caught what fell out.",
+      "evidence": "Per-turn sweep of 3 chains: 10 notes evicted. One was the record of a successful refusal -- \"Turn 13: a lantern 'carried since the crossing' was asserted... neither a lantern nor a crossing was established\". npc_relationships has the same cap problem and IS backed by npc_registry.json; continuity_notes had the cap and no registry.",
+      "found_by": "tier-0 per-turn git-history sweep",
+      "fixed_by": "commit_state.archive_evicted_notes() appends to saves/continuity_log.md, mirroring snapshot_pruned_npcs()",
+      "candidates": []
+    },
+    {
+      "id": "narration-same-turn-clobber",
+      "status": "fixed",
+      "owner": "agent",
+      "summary": "persist_narration() named files by turn alone, so a second commit at the same turn silently destroyed the first turn's prose.",
+      "evidence": "Chain A committed turn 13 and turn 15 twice each (reconciliation commits holding the turn, changing only commit_token). Reproduced directly: first narration gone, no warning. An archive that loses evidence is worse than none because it looks complete.",
+      "found_by": "self-review of the same day's diff",
+      "fixed_by": "append a per-commit_token section instead of overwriting; idempotent on re-archive",
+      "candidates": []
+    },
+    {
+      "id": "no-write-path-for-pinned-facts",
+      "status": "fixed",
+      "owner": "agent",
+      "summary": "saves/pinned_facts.json and saves/locations.json are READ by the tooling (lore_consistency_check.py, validate_state.py, location_lookup.py) but no script writes either. There is no supported way to add a pinned fact.",
+      "evidence": "Blind GMs raised this independently at least four times across runs and stopped each time: 'I tried to add Maren's no-credit terms to saves/pinned_facts.json -- exactly the kind of short load-bearing fact that should be hard-checked every turn rather than only surfacing on keyword match... The write needs your approval.' A later turn: 'That edit wasn't approved last time.' One GM also correctly DECLINED to pin a date, reasoning no regex would catch drift on it honestly -- so the judgement is sound and only the mechanism is missing.",
+      "found_by": "tier-0 mining of GM-raised deferred work in run transcripts",
+      "candidates": [
+        {
+          "name": "pin_fact.py that validates before writing",
+          "tier": 1,
+          "effectiveness": 5,
+          "churn": 1,
+          "why": "The job is not writing JSON, it is refusing to write a fact that kills the checker. Compiles the pattern, requires it to match a supplied example, bounds its runtime against a pathological input, and tests it against real GM prose from the run transcripts to surface false positives before the entry lands."
+        },
+        {
+          "name": "harden lore_consistency_check against bad entries",
+          "tier": 1,
+          "effectiveness": 3,
+          "churn": 0,
+          "why": "Stops the silent death for entries that arrive another way (hand-edited, older file), but on its own provides no write path, so the GMs stay blocked. Cheap, and complements the writer rather than competing."
+        },
+        {
+          "name": "writer with no validation",
+          "tier": 1,
+          "effectiveness": 2,
+          "churn": 1,
+          "why": "Actively worse than no writer: it makes it easy to add the exact entry that disables the advisory."
+        },
+        {
+          "name": "document the JSON shape, no script",
+          "tier": 0,
+          "effectiveness": 1,
+          "churn": 0,
+          "why": "Still requires hand-editing a file the project otherwise forbids hand-editing, and is the 'instructions nobody follows' failure already corrected once."
+        }
+      ],
+      "research": "The hazard is not writing JSON, it is what a bad entry does. lore_consistency_check.py line ~149 does fact['contradiction_patterns'] (KeyError if absent) and re.search(pattern, ...) unguarded (re.error on a malformed pattern). commit_state.run_lore_check() swallows failures by design, so a bad pinned fact makes the whole lore advisory silently dead -- it appears to run and find nothing. Practice for user-supplied regex is to validate the pattern, bound its runtime, or use a linear engine; nested quantifiers over overlapping classes ((a+)+, (\\w+\\s*)+) are the catastrophic-backtracking shape.",
+      "fixed_by": "scripts/pin_fact.py (--add/--list/--remove) which vets a pattern before writing: compiles, must match its contradiction example, must not match the fact's own wording, bounded against backtracking probes, and tested against real GM prose from saves/exports/. Plus lore_consistency_check.py hardened to skip a malformed entry rather than die. locations.json still has no writer -- narrower, and no run has been blocked on it twice."
+    },
+    {
+      "id": "fail-open-gate-path",
+      "status": "fixed",
+      "owner": "agent",
+      "summary": "Three handlers on the commit gate path turned a failure into a pass, or a skipped check into a silent one.",
+      "evidence": "(1) A corrupt npc_registry.json was read as {} and WRITTEN BACK: a registry of maren/ket/osgood plus one new introduction became {newcomer}, three names erased, commit reported 'Commit complete.' (2) Corrupting locations.json turned a real FAIL ('current_location is not in locations.json') into a PASS, silently. (3) turn_gate.py on empty stdin printed the same PASS and exit 0 as a genuine no-change turn, so a pipe that delivered nothing looked like a verification.",
+      "found_by": "targeted fail-open audit of the five gate-path scripts, prompted by four defects of the same class found earlier the same day",
+      "fixed_by": "registry: refuse the commit rather than rewrite from {}; locations: warn that the check was skipped, matching the jsonschema convention already in that file; turn_gate: empty input fails. Also: a lore pass that cannot run now says so instead of printing nothing.",
+      "candidates": []
+    }
+  ]
+}

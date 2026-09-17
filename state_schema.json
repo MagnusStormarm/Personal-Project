@@ -1,0 +1,337 @@
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "Eldara Campaign State",
+  "description": "Schema for saves/current.json. This is the single source of truth for Chad's state. validate_state.py checks saved state against this schema plus the extra closed-inventory / non-negative-currency rules documented in prompts/GM_INSTRUCTIONS.md.",
+  "type": "object",
+  "required": [
+    "schema_version",
+    "turn",
+    "in_world_date",
+    "gear",
+    "currency"
+  ],
+  "properties": {
+    "schema_version": {
+      "type": "integer",
+      "description": "Bump this whenever the shape of current.json changes, and note why in this description."
+    },
+    "commit_token": {
+      "type": "string",
+      "description": "Opaque token written by scripts/commit_state.py on every successful commit, in the form '<turn>-<6 hex chars>'. Never set this by hand or copy it from memory -- it exists solely so scripts/turn_gate.py can confirm that a specific commit corresponds to THIS turn's claimed STATE_CHANGE marker, rather than merely that some commit happened recently. The GM must copy this value verbatim from commit_state.py's own stdout into the marker; see prompts/GM_INSTRUCTIONS.md."
+    },
+    "turn": {
+      "type": "integer",
+      "minimum": 0
+    },
+    "in_world_date": {
+      "type": "object",
+      "required": [
+        "day",
+        "month",
+        "year"
+      ],
+      "properties": {
+        "day": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 35,
+          "description": "Loose, month-unaware upper bound only (jsonschema can't easily express a max that depends on a sibling field). The real per-month bound (30 for ordinary months, 5 for 'The Turning') is enforced by scripts/validate_state.py's manual_checks(), which always runs regardless of whether the jsonschema package is installed."
+        },
+        "month": {
+          "type": "string",
+          "enum": [
+            "Frostwane",
+            "Thawmoon",
+            "Seedmonth",
+            "Greenrise",
+            "Sunheight",
+            "Highsummer",
+            "Goldleaf",
+            "Harvestide",
+            "Mistfall",
+            "Darkening",
+            "Longnight",
+            "Deepwinter",
+            "The Turning"
+          ]
+        },
+        "year": {
+          "type": "integer",
+          "minimum": 1
+        }
+      }
+    },
+    "status": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Injuries, conditions, ongoing effects. Include ordinary age-related recovery notes here when they're actually established on-screen (e.g. 'ankle still stiff, slower to loosen than it used to be') -- these are real status entries like any injury, not separate lore, and clear the same way any other status does once narration resolves them."
+    },
+    "magic": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "description": "Tracks magic-touched conditions or effects actually affecting Chad on-screen (e.g. an enchanted item's effect, a healer's working still in progress) -- not a skill list, since Chad has no magical talent or training of his own."
+    },
+    "gear": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "name"
+        ],
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "acquired_turn": {
+            "type": [
+              "integer",
+              "null"
+            ]
+          },
+          "acquired_event": {
+            "type": "string"
+          },
+          "condition": {
+            "type": "string",
+            "description": "Ordinary narrated wear on an existing item (e.g. 'soles worn thin'). An edit to an existing entry, never a reason to add a duplicate or silently drop it."
+          },
+          "perishable": {
+            "type": "boolean",
+            "description": "Food, water, and similar consumables. Unlike a sword these are expected to run out with ordinary use -- remove the entry once enough on-screen time has passed that it would plausibly be consumed."
+          }
+        }
+      }
+    },
+    "currency": {
+      "type": "object",
+      "properties": {
+        "copper": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "silver": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "gold": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "platinum": {
+          "type": "integer",
+          "minimum": 0
+        }
+      }
+    },
+    "language": {
+      "type": "object",
+      "properties": {
+        "established": {
+          "type": "boolean"
+        },
+        "detail": {
+          "type": "string"
+        }
+      }
+    },
+    "entities": {
+      "type": "array",
+      "description": "Tracked non-NPC, non-faction state -- a place, an organization, an item of note, a recurring monster or threat. Same qualifying bar as everything else: something on-screen made it worth remembering, not scenery."
+    },
+    "factions": {
+      "type": "array",
+      "description": "Tracked group-level state distinct from a single named NPC -- a guild, a crew, a settlement's attitude as a whole."
+    },
+    "npc_relationships": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "npc_id",
+          "name"
+        ],
+        "properties": {
+          "npc_id": {
+            "type": "string",
+            "description": "Stable, GM-assigned slug naming the PERSON, independent of their current display name/title. Assigned once at first introduction; never changed or reused for a different person, even after this entry is pruned from the array below. Checked against saves/npc_registry.json, which never prunes, precisely so a name change (an earned title, a first-name basis) can't be mistaken for a different person once the original entry has aged out of this capped array."
+          },
+          "name": {
+            "type": "string",
+            "description": "Current display name/title. Free to evolve over the campaign -- npc_id is the identity key, not this."
+          },
+          "disposition": {
+            "type": "string"
+          },
+          "note": {
+            "type": "string"
+          },
+          "is_new_npc": {
+            "type": "boolean",
+            "description": "Required only on an entry whose npc_id wasn't present in the previously-committed npc_relationships array (a genuinely new introduction, or a previously-pruned NPC reappearing). validate_state.py checks the claim against saves/npc_registry.json: true is rejected if that id is already registered, false is rejected if it isn't. Not needed on an entry just being updated in place."
+          }
+        }
+      },
+      "maxItems": 10,
+      "description": "Soft cap of 10, matched by validate_state.py's own check so it's enforced even without the jsonschema package. Prune the stalest/lowest-stakes entry before adding a new one at the cap -- pruning is safe precisely because npc_id survives in saves/npc_registry.json even after the entry itself is gone from here."
+    },
+    "open_threads": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "required": [
+          "text",
+          "added_turn"
+        ],
+        "properties": {
+          "text": {
+            "type": "string"
+          },
+          "added_turn": {
+            "type": "integer",
+            "minimum": 0
+          },
+          "active": {
+            "type": "boolean",
+            "description": "True marks a thread with a live, time-pressured obligation -- normally paired with deadline_turn. Not a duplicate of 'still open': a resolved thread is removed from this array entirely, never just marked inactive."
+          },
+          "deadline_turn": {
+            "type": "integer",
+            "description": "DEPRECATED for expressing a dated obligation -- use deadline_date when the story named a date. Still valid for a window genuinely measured in turns, and still honoured for saves predating deadline_date. Must be strictly after added_turn. Where both are present, deadline_date governs the lapse check and a disagreement between them is warned about."
+          },
+          "deadline_date": {
+            "type": "object",
+            "description": "The in-world date this thread's window closes -- the SAME unit the fiction states it in (\"by the 16th of Seedmonth\", \"by the week's end\"). Prefer this over deadline_turn whenever the story named a date. Turns and days advance at different, variable rates -- measured at 1.09 days/turn in the seeding fixture and 0.00-0.17 in real play -- so a turn number can only ever approximate a date, and the approximation drifts as turns accumulate. Same separation Inform 7 makes: events are scheduled at a time and fire on the first turn at or after it.",
+            "properties": {
+              "day": {
+                "type": "integer",
+                "minimum": 1
+              },
+              "month": {
+                "type": "string"
+              },
+              "year": {
+                "type": "integer",
+                "minimum": 1
+              }
+            },
+            "required": [
+              "day",
+              "month",
+              "year"
+            ]
+          },
+          "amount": {
+            "type": "object",
+            "description": "What this obligation actually costs, when the fiction named a sum. Same denominations as the top-level currency object so the two can be compared directly. Optional: many threads are not debts, and a debt whose price was never stated on-screen must NOT be given an invented one here -- leave it absent and let the scene settle it. What this prevents is the number drifting once it HAS been said. Five blind runs from an identical seeded purse (14 copper, 2 silver) and an identical prompt settled the same unpriced room debt at 10, 4, 6, 0 and 34 copper-equivalent -- one paying the whole purse, one paying nothing -- because the amount existed only in whatever prose each run invented. This is to a debt what acquired_event is to a piece of gear.",
+            "properties": {
+              "copper": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "silver": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "gold": {
+                "type": "integer",
+                "minimum": 0
+              },
+              "platinum": {
+                "type": "integer",
+                "minimum": 0
+              }
+            }
+          }
+        }
+      },
+      "maxItems": 8,
+      "description": "Soft cap of 8. Prune before adding a new one at the cap; never resolve a thread the narration didn't actually close."
+    },
+    "continuity_notes": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 5,
+      "description": "Soft cap of 5. Short log of corrections actually made (drift fix, audit result, resolved discrepancy)."
+    },
+    "throughline": {
+      "type": "array",
+      "items": {
+        "type": "string"
+      },
+      "maxItems": 6,
+      "description": "Soft cap of 6. How Chad is changing internally, not what happened to him. Add sparingly, at real turning points."
+    },
+    "scene": {
+      "type": "string"
+    },
+    "current_location": {
+      "type": "string",
+      "description": "A location id from saves/locations.json (e.g. 'hollow_creek'), if Chad's current position corresponds to one of the fixed places tracked there. Optional and freeform-compatible: leave unset while Chad is somewhere not yet worth tracking as a fixed point (open wilderness, an unnamed camp). This is a narrative continuity aid, not a coordinate system with movement math -- validate_state.py only checks that the id, if set, actually exists in locations.json."
+    },
+    "travel": {
+      "type": "object",
+      "description": "Set only while a multi-day journey between two tracked locations is actually in progress; removed once Chad arrives. Exists so a journey's claimed duration is a checkable fact instead of something narration can quietly redefine partway through (see docs/ELDARA_REFERENCE.md \u00a72.8 for the underlying route durations). This tracks narrative continuity of an already-decided trip, not a turn-by-turn movement or encounter simulator.",
+      "properties": {
+        "destination": {
+          "type": "string",
+          "description": "A location id from saves/locations.json that Chad is currently traveling toward."
+        },
+        "departed_turn": {
+          "type": "integer",
+          "minimum": 0
+        },
+        "departed_date": {
+          "type": "object",
+          "description": "in_world_date at the moment of departure, same shape as the top-level in_world_date field.",
+          "properties": {
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 35
+            },
+            "month": {
+              "type": "string"
+            },
+            "year": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        },
+        "eta_date": {
+          "type": "object",
+          "description": "Expected arrival in_world_date, consistent with the departure date plus the route's known min/max duration in locations.json. Narration is free to have things go wrong en route (delay, detour) -- if that happens, update this field to match rather than letting the narrated arrival silently disagree with it.",
+          "properties": {
+            "day": {
+              "type": "integer",
+              "minimum": 1,
+              "maximum": 35
+            },
+            "month": {
+              "type": "string"
+            },
+            "year": {
+              "type": "integer",
+              "minimum": 1
+            }
+          }
+        }
+      }
+    },
+    "handoff_summary": {
+      "type": "string"
+    },
+    "arc_title": {
+      "type": "string"
+    },
+    "chapter_title": {
+      "type": "string"
+    }
+  }
+}

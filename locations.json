@@ -1,0 +1,65 @@
+{
+  "_comment": "Fixed place data and pairwise travel durations -- the World Map analog for this project. Durations are turn-count-agnostic (in_world_date days, not conversation turns) and sourced from docs/ELDARA_REFERENCE.md so this file never introduces geography the lore doc doesn't already establish. scripts/location_lookup.py reads this; scripts/validate_state.py cross-checks current_location/travel against it. Adding a new place or route here should be paired with a matching entry in ELDARA_REFERENCE.md \u00a72.8/\u00a72.3 -- this file is meant to mirror already-established lore, not originate it.",
+  "locations": {
+    "hollow_creek": {
+      "name": "Hollow Creek",
+      "region": "Border Marches / Northern March",
+      "description": "Palisaded frontier waypoint, a few hundred people. Chad's landing area. Roughly half a day's walk from where he arrived.",
+      "reference_section": "2.3"
+    },
+    "highcrown": {
+      "name": "Highcrown",
+      "region": "Heartlands",
+      "description": "Seat of Valenor governance.",
+      "reference_section": "2.3"
+    },
+    "port_vessar": {
+      "name": "Port Vessar",
+      "region": "Coast",
+      "description": "Port settlement; reputation-economy culture around debt (\u00a72.11).",
+      "reference_section": "2.3"
+    },
+    "thrum_gate": {
+      "name": "Thrum-Gate",
+      "region": "Stone Peaks / Deep Holds",
+      "description": "Dwarven hold settlement.",
+      "reference_section": "2.3"
+    },
+    "millbrook": {
+      "name": "Millbrook",
+      "region": "Heartlands",
+      "description": "River-route settlement.",
+      "reference_section": "2.3"
+    },
+    "riverwatch": {
+      "name": "Riverwatch",
+      "region": "Heartlands",
+      "description": "River-route settlement.",
+      "reference_section": "2.3"
+    },
+    "silverhaven": {
+      "name": "Silverhaven",
+      "region": "Elderwoods",
+      "description": "Elven settlement, reached by controlled forest paths.",
+      "reference_section": "2.3"
+    }
+  },
+  "routes": {
+    "_comment": "Keys are '<location_id>|<location_id>' with ids sorted alphabetically, so each unordered pair is stored once. min_days/max_days are in in_world_date days. Sourced verbatim from ELDARA_REFERENCE.md \u00a72.8's duration table.",
+    "highcrown|port_vessar": {
+      "min_days": 6,
+      "max_days": 14,
+      "note": "10-14 days by road, 6-8 by water -- range spans both methods; narrate a specific method to pick the tighter sub-range on-screen."
+    },
+    "highcrown|thrum_gate": {
+      "min_days": 8,
+      "max_days": 12,
+      "note": "By Gate Road."
+    },
+    "millbrook|riverwatch": {
+      "min_days": 3,
+      "max_days": 5,
+      "note": "River traffic."
+    }
+  }
+}

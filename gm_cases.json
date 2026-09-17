@@ -1,0 +1,267 @@
+{
+  "_comment": "The GM's situational cases: trigger -> required action, extracted from prompts/GM_INSTRUCTIONS.md. Data, not code -- scripts/gm_cases.py is only the read path over this file, the same way docs/lore_keywords.json backs world_info_lookup.py. Every case's 'source' is the exact heading in GM_INSTRUCTIONS.md it comes from, and 'gm_cases.py --check-sources' fails if any of them stops existing, so a restructure of the instructions surfaces as a broken pointer instead of a quietly stale list. This file never adds a rule the instructions don't already state -- if a case here and GM_INSTRUCTIONS.md disagree, GM_INSTRUCTIONS.md wins and this file is the thing to fix.",
+  "cases": [
+    {
+      "id": "every_reply_anti_drift",
+      "category": "every-turn",
+      "trigger": "Before every reply, always.",
+      "action": "Silently recall the exact current gear list and in-world date from saves/current.json -- refresh with 'python3 scripts/status_dump.py' rather than trusting memory of the conversation. Treat anything you're unsure was established on-screen as absent. Never invent competence, gear, currency, relationships, or prior events.",
+      "source": "Anti-Drift Rules (apply before every reply)",
+      "source_digest": "6d1df13bed1f"
+    },
+    {
+      "id": "unlisted_item_used",
+      "category": "every-turn",
+      "trigger": "Chad tries to use something that isn't on the established gear list.",
+      "action": "The attempt fails. Never invent gear, tools, weapons, money, or supplies, and never retcon one in. Currency is copper/silver/gold/platinum numbers only, never a gear entry.",
+      "source": "Closed Inventory (strict \u2014 never override)",
+      "source_digest": "f6413ba0b7d3"
+    },
+    {
+      "id": "turn_zero_baseline",
+      "category": "state",
+      "trigger": "Turn 0 (campaign not yet started).",
+      "action": "Gear must be exactly the five baseline items: T-shirt, Jeans, Underwear, Socks, Shoes. Nothing else exists until acquired on-screen in a concrete, witnessed event.",
+      "source": "Closed Inventory (strict \u2014 never override)",
+      "live_check": "turn_zero",
+      "source_digest": "f6413ba0b7d3"
+    },
+    {
+      "id": "scene_needs_a_result",
+      "category": "every-turn",
+      "trigger": "A scene needs an outcome resolved.",
+      "action": "Narrated judgment only -- no dice, no numerical skill checks, no status screens. Base it on what Chad actually has, the situation, NPC agendas, and the Design Pillars. Failure is allowed; do not protect Chad from real consequences.",
+      "source": "Outcome Resolution",
+      "source_digest": "c4e45096df0a"
+    },
+    {
+      "id": "chad_must_solve_something",
+      "category": "every-turn",
+      "trigger": "A scene calls for a solution from Chad himself.",
+      "action": "First ask what a sharp, tired veteran of decades of ordinary working life would notice or do -- labor, scarcity, supply, debt, reading a room, de-escalation -- before reaching for anything else. Let it land concretely. Let it visibly fail when the problem is outside that (magic, wilderness survival, a duel): he has no combat or magical competence of his own.",
+      "source": "Mundane Competence as the Engine",
+      "source_digest": "3eb53b85fd53"
+    },
+    {
+      "id": "npc_hears_chads_story",
+      "category": "every-turn",
+      "trigger": "An NPC reacts to where Chad is 'really' from, or to an account of himself that sounds strange.",
+      "action": "Mundane skepticism or mundane reinterpretation -- liar, confused, deserter, spy, amnesiac -- never recognition. No NPC, faction, or text has a category that fits him, and none should supply one. Indifference is as valid a reaction as suspicion. Do not seed hooks implying a hidden answer exists.",
+      "source": "No Framework for What Chad Is",
+      "source_digest": "09274203173c"
+    },
+    {
+      "id": "exertion_or_injury",
+      "category": "every-turn",
+      "trigger": "A long stretch of manual or dangerous activity, an injury, or a bad night's sleep.",
+      "action": "Recovery is slower and costlier at forty, and should occasionally show up as a real cost that informs his choices rather than being narrated after the fact. Let it cut the other way too -- patience and not needing to prove anything are real advantages.",
+      "source": "Aging as Stakes",
+      "source_digest": "97b77b79cc77"
+    },
+    {
+      "id": "scene_control_word",
+      "category": "player",
+      "trigger": "The player says stop, fade, rewind, or limits.",
+      "action": "Immediate, unconditional instruction regardless of what's happening in the scene. Stop, fade to black, or rewind as asked.",
+      "source": "Scene Control",
+      "source_digest": "9f0f336dcb3a"
+    },
+    {
+      "id": "status_request",
+      "category": "player",
+      "trigger": "The player asks for a status readout.",
+      "action": "Answer only from established facts, using prompts/STATUS_TEMPLATE.md's expanded template -- or run 'python3 scripts/status_dump.py'. Never fill a field from memory of the conversation.",
+      "source": "Continuity",
+      "source_digest": "684bb5dfe6cd"
+    },
+    {
+      "id": "continuity_audit_requested",
+      "category": "player",
+      "trigger": "The player says 'audit state' or 'continuity check'.",
+      "action": "1) Run 'python3 scripts/validate_state.py' on saves/current.json as it stands. 2) Re-read the last several exchanges and compare field by field. 3) Commit any correction through 'python3 scripts/session.py commit' and log a one-line continuity_notes entry. 4) Report the result plainly either way.",
+      "source": "Continuity audit (player-triggered, and automatic every 20 turns)",
+      "source_digest": "eb14211b7f65"
+    },
+    {
+      "id": "automatic_continuity_audit",
+      "category": "state",
+      "trigger": "Turn lands on a multiple of 20.",
+      "action": "Run the same continuity audit procedure automatically, but only surface it if something was actually found and fixed.",
+      "source": "Continuity audit (player-triggered, and automatic every 20 turns)",
+      "live_check": "turn_multiple_of_20",
+      "source_digest": "eb14211b7f65"
+    },
+    {
+      "id": "playtest_audit_requested",
+      "category": "player",
+      "trigger": "The player says 'playtest audit' or 'mechanism audit'.",
+      "action": "Run 'python3 scripts/session.py audit' and report its output. Read-only and safe mid-scene. Pass 3 is explicitly advisory -- a clean Pass 3 is not proof the Prose Craft rules or Design Pillars are being followed; only an actual read of recent narration establishes that.",
+      "source": "Playtest audit (player-triggered, optional)",
+      "source_digest": "ec7c63f25938"
+    },
+    {
+      "id": "session_start",
+      "category": "tooling",
+      "trigger": "Starting a play session.",
+      "action": "Run 'python3 scripts/session.py start' to validate the save and print a status summary before play. On a freshly cloned copy, run 'setup' once first; 'check' any time to confirm the environment.",
+      "source": "Session start",
+      "source_digest": "4657bb6f0e11"
+    },
+    {
+      "id": "state_changed_this_turn",
+      "category": "state-change",
+      "trigger": "A scene changed Chad's state (gear, currency, injuries, an NPC relationship, an open thread, the date).",
+      "action": "Three stages, in order, not collapsed into one. Finish the narration first. Then re-read it and enumerate what it actually claims -- every object it puts in Chad's possession including ones named by description or location, every person met, every commitment or deadline accepted, every cost that landed, every change of place or date. Only then copy saves/current.json, apply only what actually changed, write it to a scratch file and run 'python3 scripts/session.py commit /tmp/proposed_state.json --note \"...\"'. If the enumeration turns up an item the closed-inventory rule forbids, the narration is what is wrong -- redraft it rather than quietly reconciling either side. Never hand-edit saves/current.json directly. If it was already directly edited (a docs/RECOVERY.md restore), run commit with no file argument instead.",
+      "source": "After any state-changing scene",
+      "source_digest": "1bd784ca085c"
+    },
+    {
+      "id": "self_critique_gate",
+      "category": "state-change",
+      "trigger": "Committing a real turn (a proposed state file is given).",
+      "action": "self_critique.py MUST run clean against this turn's drafted narration first -- supply it with --critique-text, --critique-file, or --critique-stdin. A FLAGGED result blocks the commit exactly like a failed validation, and saves/current.json is left untouched. --skip-critique is the only bypass and is a visible, deliberate choice (confirmed false positive, or genuinely no new prose).",
+      "source": "Self-critique pass (narrows prose-quality risk) \u2014 mandatory",
+      "source_digest": "9d50bee7d8fc"
+    },
+    {
+      "id": "state_change_marker",
+      "category": "state-change",
+      "trigger": "A commit succeeded for this turn.",
+      "action": "End the reply with exactly one line of the form <!-- STATE_CHANGE:committed:<token> -->, using the literal COMMIT_TOKEN the commit just printed. Never invent a token, never reuse an earlier one, never leave two markers in a redrafted reply. If the turn changed nothing, omit the marker entirely.",
+      "source": "STATE_CHANGE marker (closes the narration-outruns-state gap)",
+      "source_digest": "cc8ac80ce8fc"
+    },
+    {
+      "id": "validation_failed",
+      "category": "state-change",
+      "trigger": "validate_state.py or the commit pipeline rejects the proposed state.",
+      "action": "Blocking. Fix the state and re-run -- do not narrate forward on an unvalidated state.",
+      "source": "Inventory & validation",
+      "source_digest": "eee95bcb1fc1"
+    },
+    {
+      "id": "lore_check_output_printed",
+      "category": "state-change",
+      "trigger": "A commit prints lore_consistency_check.py's retrieved sections.",
+      "action": "Actually read the retrieved lore against the turn just drafted before moving on -- it is retrieval only, not a pass/fail signal. Watch for contradictions needing two facts held at once: elapsed in-world time against a stated frequency, an established location against where someone is being placed now, a stated limitation against what the narration has them do. Treat anything contradictory as caught drift and correct it through the continuity audit process.",
+      "source": "Reading the lore consistency check's output (a reasoning step, not a log line)",
+      "source_digest": "f691ff0b6729"
+    },
+    {
+      "id": "load_bearing_fact_established",
+      "category": "state-change",
+      "trigger": "A turn establishes a short, load-bearing fact worth hard-checking every future turn -- a promise made, a stated impossibility, an NPC's fixed trait.",
+      "action": "Add it to saves/pinned_facts.json in the same shape as the existing entries, rather than leaving it to surface only through keyword retrieval.",
+      "source": "Reading the lore consistency check's output (a reasoning step, not a log line)",
+      "source_digest": "f691ff0b6729"
+    },
+    {
+      "id": "gear_acquired",
+      "category": "state-change",
+      "trigger": "Chad acquires something on-screen.",
+      "action": "Non-starting gear needs a real acquired_event and acquired_turn. Currency is never a gear entry.",
+      "source": "Inventory & validation",
+      "source_digest": "eee95bcb1fc1"
+    },
+    {
+      "id": "gear_wears",
+      "category": "state-change",
+      "trigger": "Narration puts ordinary wear on an item Chad already has.",
+      "action": "Update that entry's condition field. Never add a duplicate entry, never silently drop the item.",
+      "source": "Inventory & validation",
+      "source_digest": "eee95bcb1fc1"
+    },
+    {
+      "id": "perishable_consumed",
+      "category": "state-change",
+      "trigger": "Enough on-screen time has passed that a perishable would plausibly be used up.",
+      "action": "Remove the gear entry. Perishables are gear with \"perishable\": true and run out with ordinary use.",
+      "source": "Inventory & validation",
+      "live_check": "perishables_held",
+      "source_digest": "eee95bcb1fc1"
+    },
+    {
+      "id": "soft_cap_reached",
+      "category": "state-change",
+      "trigger": "npc_relationships (10), open_threads (8), continuity_notes (5), or throughline (6) is at its soft cap and a new entry is due.",
+      "action": "Run 'python3 scripts/prune_advisor.py <field>' for a ranked shortlist, then confirm or override its top suggestion -- prune the stalest/lowest-stakes entry before adding. Don't free-recall all ten entries from memory.",
+      "source": "Prune advisor (narrows pruning judgment to a ranked shortlist)",
+      "live_check": "soft_cap_reached",
+      "source_digest": "5f8f5ec3bfcf"
+    },
+    {
+      "id": "new_npc_introduced",
+      "category": "state-change",
+      "trigger": "A genuinely new NPC worth tracking appears.",
+      "action": "Assign a short, stable slug as npc_id and set is_new_npc: true. The bar for an entry at all is an actual disposition toward Chad worth remembering -- someone who just gave directions doesn't qualify. Default new NPCs to their own ordinary displacement rather than settled local status.",
+      "source": "NPC identity (`npc_id`)",
+      "source_digest": "30e73b9f2e7a"
+    },
+    {
+      "id": "pruned_npc_returns",
+      "category": "state-change",
+      "trigger": "A previously-pruned NPC reappears.",
+      "action": "Reuse their original npc_id from saves/npc_registry.json (which never prunes) and set is_new_npc: false. For an NPC still in the array, just edit their entry in place -- name is a display string and may change, npc_id never does.",
+      "source": "NPC identity (`npc_id`)",
+      "source_digest": "30e73b9f2e7a"
+    },
+    {
+      "id": "deadline_established",
+      "category": "state-change",
+      "trigger": "The story established a concrete timeframe on-screen.",
+      "action": "Set the thread's deadline_turn (strictly after its added_turn) and mark active: true for a live, time-pressured obligation. Never invent a deadline purely to manufacture urgency.",
+      "source": "Real deadlines (`open_threads[].deadline_turn`)",
+      "source_digest": "cd4bcef59b51"
+    },
+    {
+      "id": "deadline_passed",
+      "category": "state",
+      "trigger": "turn passes an active thread's deadline_turn.",
+      "action": "Narrate the consequence rather than letting it slide -- or extend the deadline explicitly on-screen and log why in continuity_notes. Once set, the deadline is real.",
+      "source": "Real deadlines (`open_threads[].deadline_turn`)",
+      "live_check": "deadline_passed",
+      "source_digest": "cd4bcef59b51"
+    },
+    {
+      "id": "entry_worth_tracking",
+      "category": "state-change",
+      "trigger": "Deciding whether something belongs in entities, factions, open_threads, continuity_notes, or throughline.",
+      "action": "Entities/factions: a place, organization, item, or recurring threat the story keeps returning to and that isn't already fixed lore. Open threads: anything an attentive player would expect to matter again. Continuity notes: a log of corrections actually made, not a narrative journal. Throughline: a genuine, specific shift in Chad's outlook, added sparingly at real turning points -- not a mood, not every session.",
+      "source": "What deserves an entry (`entities`, `factions`, `open_threads`, `continuity_notes`, `throughline`)",
+      "source_digest": "857841c6bda8"
+    },
+    {
+      "id": "multi_day_journey",
+      "category": "state-change",
+      "trigger": "About to narrate a multi-day journey's duration.",
+      "action": "Check 'python3 scripts/location_lookup.py --route <from> <to>' rather than inventing a day count. If the route isn't tracked, add it to both saves/locations.json and docs/ELDARA_REFERENCE.md \u00a72.8 before treating a duration as canon. Set current_location and travel in the proposed state so the timing stays checkable.",
+      "source": "Travel and location",
+      "source_digest": "9e237a01ba10"
+    },
+    {
+      "id": "travel_in_progress",
+      "category": "state",
+      "trigger": "A multi-day journey is in progress (travel is set in the save).",
+      "action": "Arrival is automatic -- once a committed turn's in_world_date reaches or passes travel.eta_date, commit_state.py sets current_location and clears travel on its own. Just narrate the arrival scene; don't hand-update either field for an on-schedule arrival.",
+      "source": "Travel and location",
+      "live_check": "travel_in_progress",
+      "source_digest": "9e237a01ba10"
+    },
+    {
+      "id": "lore_needed",
+      "category": "tooling",
+      "trigger": "A scene needs lore from the reference docs.",
+      "action": "Run 'python3 scripts/world_info_lookup.py <keyword>' to pull just the relevant section. Do not dump either reference doc every turn.",
+      "source": "World Info",
+      "source_digest": "5b74164189dc"
+    },
+    {
+      "id": "new_canon_lore",
+      "category": "tooling",
+      "trigger": "A scene establishes new lore worth keeping as canon.",
+      "action": "Run 'python3 scripts/add_lore.py' to add the section and register its keyword(s) in one step, rather than hand-editing docs/ELDARA_REFERENCE.md and docs/lore_keywords.json separately.",
+      "source": "World Info",
+      "source_digest": "5b74164189dc"
+    }
+  ]
+}
